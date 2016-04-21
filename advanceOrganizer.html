@@ -1,0 +1,360 @@
+/**
+ *
+ * Code Created by Ben Sanchez, Andy Wold and Michael Fidler for CS 260 Class
+ * Updated last version  4/14/2016
+ *
+ *
+ *
+ **/
+< !DOCTYPE html >
+    < html lang = "en" >
+
+    < head >
+    < meta charset = "utf-8" >
+    < meta http - equiv = "X-UA-Compatible"
+content = "IE=edge" >
+    < meta name = "viewport"
+content = "width=device-width, initial-scale=1" >
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    < title > Home Team - Final Release < /title>
+    <!-- Stylesheet Bootstrap  in use -->
+    < link rel = "stylesheet"
+href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" >
+    <!-- CSS located in the manage files of the organization level -->
+    < link rel = "stylesheet"
+type = "text/css"
+href = "https://ldsbctest.brightspace.com/content/css/advanceOrganizor.css" >
+
+    <!-- Updated by Andy E. Wold, 10 Apr 2016, to match working Test Grade app -->
+    //
+    < script type = "text/javascript"
+src = "http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js" > < /script> < script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" > < /script>
+
+<!-- Custom CSS -->
+< style type = "text/css" >
+    a.dayBoots {
+        width: 7.24 % ;
+        text - align: center;
+    }
+    .tabs {
+        border: 1 px solid# ddd;
+    }@
+media(min - width: 300 px) {
+        .navbar {
+            min - height: 34 px;
+        }
+    }
+    .nav {
+        border - style: outset;
+    }
+    .nav > li > a {
+        position: relative;
+        display: block;
+        padding: 10 px 15 px;
+        border - style: double;
+    }
+    .embed - responsive {
+        position: relative;
+        display: block;
+        height: 0;
+        padding: 0;
+        overflow: hidden;
+
+    }
+p {
+    display: block;
+    font - family: 'Open Sans',
+    sans - serif;
+    font - size: 18 px;
+    font - weight: 400;
+    line - height: 27 px;
+    margin - bottom: 20 px;
+} < /style> < script >
+    //<![CDATA[
+    var orgUnit = window.parent.parent.location.pathname.split('/')[4];
+var course = [];
+var courseAbbrev = "";
+
+// Performs ajax calls then calculates grade
+$.when(findId()).done(function(uniqueId) {
+    console.log("uniqueId.Identifier is: " + uniqueId.Identifier);
+    $.when(findCourseName()).done(function(course) {
+        // Replaces content of "id=courseTitle" with course name
+        console.log("course.Name is: " + course.Name);
+        courseAbbrev = course.Name.split(' (Section ')[0];
+        console.log("courseAbbrev is: " + courseAbbrev);
+        document.getElementById("courseTitle").textContent = courseAbbrev;
+    });
+});
+
+// Find User Identifier
+function findId() {
+    return $.ajax({
+        dataType: 'json',
+        url: '/d2l/api/lp/1.5/users/whoami',
+        headers: {
+            'X-Csrf-Token': localStorage['XSRF.Token']
+        }
+    });
+}
+
+//Find the grades for user from grades
+function findCourseName(uniqueId) {
+    return $.ajax({
+        dataType: 'json',
+        url: '/d2l/api/lp/1.5/courses/' + orgUnit,
+        headers: {
+            'X-Csrf-Token': localStorage['XSRF.Token']
+        }
+    });
+} < /script> < /head>
+
+< body >
+    < div id = "wrap" > <!-- Advance Organizor parts --> <!-- Fixed navbar --><nav class="navbar navbar-default navbar-fixed-top">
+    < div class = "container-bar"
+style = "height: 36px;" > < a class = "navbar-brand"
+href = "/d2l/home?view=classic" > < span class = "glyphicon glyphicon-home" > < /span> </a >
+    < div id = "title" >
+    < p id = "courseTitle" > < /p> < /div> < div class = "btn-group"
+role = "group"
+aria - label = "..." > <!-- Edited by Andy Wold, 09 Apr 2016 --> <button id="gradeOverall" class="btn btn-primary bs-docs-popover grade" type="button" data-toggle="popover" data-placement="bottom" data-content="Your overall grade"></button> <button class="btn btn-default week" type="button" data-container="body" data-toggle="popover" data-placement="bottom">Week: 14</button></div>
+    < /div> < /nav><!-- End of Fixed navbar --> < div id = "wrap" > <!-- Weeks navigator -->
+    < div class = "days" >
+    < ul style = "width: 100%; position: relative; top: 20px; left: 0; margin-top: 0px;"
+class = "pagination pagination-lg daysContent" >
+    < li class = "1" > < a class = "dayBoots "
+href = "#" > Week < br / > 1 < /a></li >
+    < li class = "2" > < a class = "dayBoots "
+href = "#" > Week < br / > 2 < /a></li >
+    < li class = "3" > < a class = "dayBoots "
+href = "#" > Week < br / > 3 < /a></li >
+    < li class = "4" > < a class = "dayBoots "
+href = "#" > Week < br / > 4 < /a></li >
+    < li class = "5" > < a class = "dayBoots "
+href = "#" > Week < br / > 5 < /a></li >
+    < li class = "6" > < a class = "dayBoots "
+href = "#" > Week < br / > 6 < /a></li >
+    < li class = "7" > < a class = "dayBoots "
+href = "#" > Week < br / > 7 < /a></li >
+    < li class = "8" > < a class = "dayBoots "
+href = "#" > Week < br / > 8 < /a></li >
+    < li class = "9" > < a class = "dayBoots "
+href = "#" > Week < br / > 9 < /a></li >
+    < li class = "10" > < a class = "dayBoots  "
+href = "#" > Week < br / > 10 < /a></li >
+    < li class = "11" > < a class = "dayBoots "
+href = "https://ldsbctest.brightspace.com/content/enforced/10160-LDSBC-CS-260-2161-01/daysRowTest.html" > Week < br / > 11 < /a></li >
+    < li class = "12" > < a class = "dayBoots"
+href = "https://ldsbctest.brightspace.com/content/enforced/10160-LDSBC-CS-260-2161-01/daysRowTest.html"
+target = "_parent" > Week < br / > 12 < /a></li >
+    < li class = "13" > < a class = "dayBoots "
+href = "https://ldsbctest.brightspace.com/content/enforced/10160-LDSBC-CS-260-2161-01/daysRowTest.html" > Week < br / > 13 < /a></li >
+    < li class = "14" > < a class = "dayBoots "
+href = "#" > Week < br / > 14 < /a></li >
+    < /ul> < /div>
+    <!-- Week activities navigator  -->
+    < div class = "examples"
+style = "position: relative; height: 77px;" >
+    < ul id = "groups"
+class = "nav nav-pills nav-justified"
+role = "tablist" > < /ul> < /div>
+    <!-- Iframe to display activities -->
+    < div class = "row row-content" >
+    < div class = "col-xs-12 col-sm-12 " >
+    < div class = "embed-responsive embed-responsive-16by9" > < iframe id = "myFrame"
+class = "embed-responsive-item"
+name = "iframe_a" > < /iframe></div >
+    < /div> < /div> < /div> < script > // <![CDATA[
+    //This is API call gets the table of contents of the course 
+    $.ajax('/d2l/api/le/1.5/10160/content/toc', {
+        dataType: 'json',
+        headers: {
+            'X-Csrf-Token': localStorage['XSRF.Token']
+        }
+    }).done(function(data) {
+        //This function iterates through the table of content arrays and gets the module number 3556 in order to get all the topics urls
+        //console.log(data);
+        var grouplist = $('#groups');
+        //console.log(data);
+        var moduleTopicsIDsArray = [];
+        var topicUrlArray = [];
+        data.Modules.forEach(function(module, index) {
+            if (module.ModuleId == 3556) {
+                //console.log('ModuleId', module.ModuleId);
+                //console.log('ModuleTopics', module.Topics);
+                module.Topics.forEach(function(Topic, key) {
+                    // console.log(Topic.Url);
+                    topicUrlArray.push(Topic.Url);
+                });
+                moduleTopicsIDsArray.push(module.Topics);
+
+                module.Modules.forEach(function(Module, key) {
+                    moduleTopicsIDsArray.push(Module.Topics);
+                    //console.log('Module.Topics', Module.Topics);
+                    Module.Topics.forEach(function(Topic, key) {
+                        //console.log(Topic.Url);
+                        topicUrlArray.push(Topic.Url);
+                    });
+                });
+
+            }
+
+        });
+
+        var icon = [];
+        var sur = /survey/;
+        var check = /checklist/;
+        var quiz = /quiz/;
+        var drop = /dropbox/;
+        var dis = /discuss/;
+        var you = /youtube/;
+        var brightcove = /brightcove/;
+        var htmlFile = /html/;
+        var video = /video/;
+        var myFrame = document.getElementById("myFrame");
+
+        // Iterate the url array in order to match the url with a variable and assign a icon and append it to the ul 
+        $.each(topicUrlArray, function(key, val) {
+            // search for value and replace it
+            console.log('val', val);
+            console.log('key', key);
+
+            if (topicUrlArray[key] = val.match(sur)) {
+                icon.push(topicUrlArray[key].input);
+                $('<li role="presentation style="border: 1px solid #ddd;" class="active" title="Survey">' + '<a href=" ' + val + '"  >' + '<i class="glyphicon glyphicon-list-alt">' + '</i>' + '<span></span>' + '.' + '</li>').appendTo(grouplist);
+                //myFrame.src = icon[key];
+            } else if (topicUrlArray[key] = val.match(check)) {
+
+                $('<li role="presentation style="border: 1px solid #ddd;" title="Checklist">' + '<a href=" ' + val + '"   >' + '<i class="glyphicon glyphicon-check">' + '</i>' + '<span></span>' + '.' + '</li>').appendTo(grouplist);
+            } else if (topicUrlArray[key] = val.match(quiz)) {
+
+                $('<li role="presentation style="border: 1px solid #ddd;" title="Quiz">' + '<a href="' + val + '"  >' + '<i class="glyphicon glyphicon-question-sign">' + '</i>' + '<span></span>' + '.' + '</li>').appendTo(grouplist);
+            } else if (topicUrlArray[key] = val.match(drop)) {
+                $('<li role="presentation style="border: 1px solid #ddd;" title="Dropbox">' + '<a href="' + val + '" >' + '<i class="glyphicon glyphicon-folder-open">' + '</i>' + '<span></span>' + '.' + '</li>').appendTo(grouplist);
+            } else if (topicUrlArray[key] = val.match(dis)) {
+                $('<li role="presentation style="border: 1px solid #ddd;" title="Discussion">' + '<a href="' + val + '" >' + '<i class="glyphicon glyphicon-comment">' + '</i>' + '<span></span>' + '.' + '</li>').appendTo(grouplist);
+            } else if (topicUrlArray[key] = val.match(you)) {
+                $('<li role="presentation style="border: 1px solid #ddd;" title="Video">' + '<a href="' + val + '" >' + '<i class="glyphicon glyphicon-film">' + '</i>' + '<span></span>' + '.' + '</li>').appendTo(grouplist);
+            } else if (topicUrlArray[key] = val.match(video)) {
+                $('<li role="presentation style="border: 1px solid #ddd;" title="Video">' + '<a href="' + val + '"  >' + '<i class="glyphicon glyphicon-film">' + '</i>' + '<span></span>' + '.' + '</li>').appendTo(grouplist);
+            } else if (topicUrlArray[key] = val.match(brightcove)) {
+                $('<li role="presentation style="border: 1px solid #ddd;" title="Video">' + '<a href="' + val + '" >' + '<i class="glyphicon glyphicon-film">' + '</i>' + '<span></span>' + '.' + '</li>').appendTo(grouplist);
+            } else if (topicUrlArray[key] = val.match(htmlFile)) {
+                $('<li role="presentation style="border: 1px solid #ddd;" title="Lecture">' + '<a href="' + val + '" >' + '<i class="glyphicon glyphicon-book">' + '</i>' + '<span></span>' + '.' + '</li>').appendTo(grouplist);
+            }
+
+        });
+
+
+
+        // Iframe will initialize with the first url on the array
+        myFrame.src = icon[0];
+
+        // When document is ready create a listener that will affect the activities navitagor and will assign a url to the iframe source
+        $(document).ready(function() {
+            $("#groups li a").on("click", function(e) {
+                e.preventDefault();
+                var href = $(this).attr("href");
+                myFrame.src = href;
+                $("#groups li").removeClass("active");
+                $(this).parent().addClass("active");
+
+
+                //console.log("href",href);
+            });
+        })
+
+
+    });
+// ]]></script>
+< script type = "text/javascript" > // <![CDATA[
+    var orgUnit = window.parent.parent.location.pathname.split('/')[4];
+
+// Performs ajax calls then calculates grade
+$.when(findId()).done(function(uniqueId) {
+    $.when(findGrades(uniqueId.Identifier)).done(function(grades) {
+        // Edited by Andy Wold, 09 Apr 2016
+        var totalPoints = 0.0;
+        var totalPossible = 0.0;
+        var gradeScore = 0.0;
+        //Calculates grades
+        for (var i = 0; i < grades.length; i++) {
+            totalPoints = totalPoints + grades[i].PointsNumerator;
+            totalPossible = totalPossible + grades[i].PointsDenominator;
+        }
+        // Edited by Andy Wold, 09 Apr 2016
+        var gradeScore = (totalPoints / totalPossible);
+        var gradeLetter = scoreToLetter(gradeScore);
+        var gradePercent = scoreRounding(gradeScore);
+        // Replaces content of "id=grade" with calculated grade
+        // Edited by Andy Wold, 10 Apr 2016
+        document.getElementById("gradeOverall").textContent = gradeLetter + "  (" + gradePercent + "%)";
+
+    });
+});
+
+//Rounds the grade score
+function scoreRounding(gradeScore) {
+    var result = gradeScore * 10000;
+    // Edited by Andy Wold to match Math.floor() parameters, 09 Apr 2016
+    result = Math.floor(result);
+    result = result / 100;
+    return result;
+}
+
+//Function to convert the score to a letter grade
+function scoreToLetter(score) {
+    if (score >= 0.94) {
+        return "A";
+    } else if (score >= 0.90) {
+        return "A-";
+    } else if (score >= 0.87) {
+        return "B+";
+    } else if (score >= 0.84) {
+        return "B";
+    } else if (score >= 0.80) {
+        return "B-";
+    } else if (score >= 0.77) {
+        return "C+";
+    } else if (score >= 0.74) {
+        return "C";
+    } else if (score >= 0.70) {
+        return "C-";
+    } else if (score >= 0.67) {
+        return "D+";
+    } else if (score >= 0.64) {
+        return "D";
+    } else if (score >= 0.60) {
+        return "D-";
+    } else {
+        return "E";
+    }
+}
+
+// Find User Identifier
+// Edited by Andy E. Wold, 10 Apr 2016, moved URL into parameters instead of in ajax function
+function findId() {
+    return $.ajax({
+        dataType: 'json',
+        url: '/d2l/api/lp/1.5/users/whoami',
+        headers: {
+            'X-Csrf-Token': localStorage['XSRF.Token']
+        }
+    });
+}
+
+//Find the grades for user from grades
+// Edited by Andy E. Wold, 10 Apr 2016, moved URL into parameters instead of in ajax function
+function findGrades(uniqueId) {
+        return $.ajax({
+            dataType: 'json',
+            url: '/d2l/api/le/1.5/' + orgUnit + '/grades/values/' + uniqueId + '/',
+            headers: {
+                'X-Csrf-Token': localStorage['XSRF.Token']
+            }
+        });
+    }
+    // ]]></script>
+    < /div> < /body>
+
+< /html>
